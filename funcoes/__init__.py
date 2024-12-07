@@ -7,24 +7,25 @@ opcoes_menu_inical = ['0', '1', '2']
 opcoes_menu_eventos = ['0', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
 
 
-def criar_planilha_eventos_participantes():
+def criar_planilha_eventos_participantes(usuario_logado):
     dados = []
 
-    for nome_evento in eventos:
-        participantes = contar_participantes([nome_evento], inscricoes)
-        for inscricao in inscricoes:
-            if inscricao[0] == nome_evento:
-                dados.append({
-                    'Nome do participante': inscricao[1],
-                    'Nome do Evento': nome_evento,
-                    'Status de Pagamento': inscricao[2],
-                    'Data do evento' : eventos[nome_evento]['data'],
-
-                })
-
-    df = pd.DataFrame(dados)
-    df.to_excel('eventos_participantes.xlsx', index=False)
-    print("Planilha 'eventos_participantes.xlsx' criada com sucesso.")
+    for nome_evento, detalhes_evento in eventos.items():
+        if detalhes_evento['criador'] == usuario_logado:
+            for inscricao in inscricoes:
+                if inscricao[0] == nome_evento:
+                    dados.append({
+                        'Nome do participante': inscricao[1],
+                        'Nome do Evento': nome_evento,
+                        'Status de Pagamento': inscricao[2],
+                        'Data do evento': detalhes_evento['data'],
+                    })
+    if dados:
+        df = pd.DataFrame(dados)
+        df.to_excel('eventos_participantes.xlsx', index=False)
+        print("Planilha 'eventos_participantes.xlsx' criada com sucesso.")
+    else:
+        print("Você não tem permissão para gerar a planilha ou não há eventos com inscrições.")
 
 
 def nomes_eventos(eventos):

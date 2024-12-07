@@ -114,7 +114,7 @@ while op != '0':
                 else:
                     print("Nenhum evento cadastrado para exibir no gráfico.")
             elif op_eventos == '12':
-                criar_planilha_eventos_participantes()
+                criar_planilha_eventos_participantes(email)
 
             elif op_eventos == '0':
                 print('Saindo do menu de eventos...')
