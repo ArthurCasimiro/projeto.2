@@ -87,6 +87,7 @@ while op != '0':
                 nome_do_evento = input("Digite o nome do evento: ")
                 listar_participantes_evento(nome_do_evento, email, email)
 
+
             elif op_eventos == '10':
                 nome_evento = input("Digite o nome do evento: ")
                 verificar_valor_arrecadado(nome_evento, email)
@@ -102,7 +103,7 @@ while op != '0':
                         participantes_existem = True
 
                     if participantes_existem:
-                        plt.bar(nomes_evento, qtd_participantes, color='skyblue')
+                        plt.bar(nomes_evento, qtd_participantes, color=['red', 'green', 'blue', 'yellow'])
                         plt.xlabel('Eventos')
                         plt.ylabel('Quantidade de Participantes')
                         plt.title('Quantidade de Participantes por Evento')

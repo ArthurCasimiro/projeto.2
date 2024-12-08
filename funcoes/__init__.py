@@ -15,7 +15,7 @@ def criar_planilha_eventos_participantes(usuario_logado):
             for inscricao in inscricoes:
                 if inscricao[0] == nome_evento:
                     dados.append({
-                        'Nome do participante': inscricao[1],
+                        'Email do participante': inscricao[1],
                         'Nome do Evento': nome_evento,
                         'Status de Pagamento': inscricao[2],
                         'Data do evento': detalhes_evento['data'],
@@ -71,20 +71,29 @@ def verificar_valor_arrecadado(nome_evento, criador_email):
 def listar_participantes_evento(nome_evento, criador_email, usuario_email):
     if nome_evento in eventos and eventos[nome_evento]['criador'] == criador_email:
         if usuario_email != criador_email:
-            print("Permissão negada: Apenas o criador do evento pode ver a lista de participantes.")
+            print("Permissão negada: Apenas o criador do evento pode criar a lista de participantes.")
             return
 
         print(f"Lista de participantes do evento '{nome_evento}':")
         participantes_encontrados = False
-        for inscricao in inscricoes:
-            if inscricao[0] == nome_evento:
-                print(f"email: {inscricao[1]}, Status de Pagamento: {inscricao[2]}")
-                participantes_encontrados = True
-        if not participantes_encontrados:
-            print("Nenhum participante inscrito neste evento.")
-        return
+
+        with open(f'participantes_{nome_evento}.txt', 'w') as arquivo:
+            for inscricao in inscricoes:
+                if inscricao[0] == nome_evento:
+                    print(f"email: {inscricao[1]}, Status de Pagamento: {inscricao[2]}")
+                    arquivo.write(f"email: {inscricao[1]}, Status de Pagamento: {inscricao[2]}\n")
+                    participantes_encontrados = True
+            
+            if not participantes_encontrados:
+                print("Nenhum participante inscrito neste evento.")
+                arquivo.write("Nenhum participante inscrito neste evento.\n")
+            else:
+                print(f"Lista de participantes salva em 'participantes_{nome_evento}.txt'.")
     else:
         print("Evento não encontrado ou você não tem permissão para visualizá-lo.")
+                   
+            
+
 
 
 def inscricao(nome_do_evento, usuario_nome, pagamento):
@@ -148,7 +157,7 @@ def menu_eventos():
     print('[6] Listar meus eventos')
     print('[7] Remover um evento')
     print('[8] Participar de um evento')
-    print('[9] Listar participantes')
+    print('[9] Listar participantes e criar arquivo txt')
     print('[10] Valor arrecadado')
     print('[11] criar grafico dos eventos')
     print('[12] criar planilha dos eventos')
