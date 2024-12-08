@@ -91,9 +91,6 @@ def listar_participantes_evento(nome_evento, criador_email, usuario_email):
                 print(f"Lista de participantes salva em 'participantes_{nome_evento}.txt'.")
     else:
         print("Evento não encontrado ou você não tem permissão para visualizá-lo.")
-                   
-            
-
 
 
 def inscricao(nome_do_evento, usuario_nome, pagamento):
@@ -120,8 +117,7 @@ def listar_eventos(email=None):
     if email is None:
         resultado = eventos
     else:
-        resultado = eventos.values() if email is None else [evento for evento in eventos.values() if
-                                                            evento['criador'] == email]
+        resultado = eventos.values() if email is None else [evento for evento in eventos.values() if evento['criador'] == email]
 
     if resultado:
         print("Eventos encontrados:")
