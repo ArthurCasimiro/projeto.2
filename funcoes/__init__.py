@@ -115,10 +115,10 @@ def buscar_eventos(busca):
 
 def listar_eventos(email=None):
     if email is None:
-        resultado = eventos
+        resultado = eventos.values()  
     else:
-        resultado = eventos.values() if email is None else [evento for evento in eventos.values() if evento['criador'] == email]
-
+        resultado = [evento for evento in eventos.values() if evento['criador'] == email]
+        
     if resultado:
         print("Eventos encontrados:")
         for evento in resultado:
@@ -126,10 +126,9 @@ def listar_eventos(email=None):
             print(f"Descrição: {evento['descricao']}")
             print(f"Data: {evento['data']}")
             print(f"Local: {evento['local']}")
-            print(f"Valor da inscrição: {evento['valor']:.2f}\n")
+            print(f"Valor da inscrição: R${evento['valor']:.2f}\n")
     else:
         print("Nenhum evento encontrado.")
-
 
 def remover_evento(email):
     if listar_eventos(email):
